@@ -18,9 +18,7 @@ int main() {
 	pid_t pid, sid; pid = fork();
 	if (pid < 0) { exit(EXIT_FAILURE); }
 	if (pid > 0) { exit(EXIT_SUCCESS); }
-	//777 (for a directory)
-	umask(777); //https://docs.oracle.com/cd/E19683-01/817-3814/userconcept-95347/index.html
-	sid = setsid();
+	umask(0); sid = setsid();
 	if (sid < 0) { exit(EXIT_FAILURE); }
 	if ((chdir("/")) < 0) { exit(EXIT_FAILURE); }
 	close(STDIN_FILENO); close(STDOUT_FILENO); close(STDERR_FILENO);
