@@ -106,7 +106,7 @@ int main(){
             else {
                 close(rw_pipe2[1]); close(rw_pipe1[0]); close(rw_pipe1[1]);
                 int byte = read(rw_pipe2[0],tmp,sizeof(tmp));
-                freopen("data.txt","w+",stdout);
+                freopen("daftar.txt","w+",stdout);
                 printf("%s\n",tmp);
                 fclose(stdout);
 		 close(rw_pipe2[0]);
