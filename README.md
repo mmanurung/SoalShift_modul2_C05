@@ -32,7 +32,21 @@ Penjelasan program</br>
 Bertujuan untuk mengarahkan pointer ke direktori yang ditentukan, lalu isi folder tersebut dibaca. Simpan folder asal dan folder tujuan ke array masing-masing, lalu ambil nama file nya dan simpan ke array x. Kemudian tentukan apakah file tersebut berekstensi png atau tidak. Jika ya, maka nama file di tambahkan dengan _grey.png dan di simpan di direktori tujuan.</br></br>
 
 2. Pada suatu hari Kusuma dicampakkan oleh Elen karena Elen dimenangkan oleh orang lain. Semua kenangan tentang Elen berada pada file bernama “elen.ku” pada direktori “hatiku”. Karena sedih berkepanjangan, tugas kalian sebagai teman Kusuma adalah membantunya untuk menghapus semua kenangan tentang Elen dengan membuat program C yang bisa mendeteksi owner dan group dan menghapus file “elen.ku” setiap 3 detik dengan syarat ketika owner dan grupnya menjadi “www-data”. Ternyata kamu memiliki kendala karena permission pada file “elen.ku”. Jadi, ubahlah permissionnya menjadi 777. Setelah kenangan tentang Elen terhapus, maka Kusuma bisa move on.
-</br>Catatan: Tidak boleh menggunakan crontab</br></br>
+</br>Catatan: Tidak boleh menggunakan crontab</br>
+Penjelasan:</br>
+Buat folder hatiku yang berisi file elen.ku
+Penjelasan program</br>
+
+	```bash
+	stat(elen, &sb); //stat system call
+	struct passwd *pw = getpwuid(sb.st_uid);
+	struct group  *gr = getgrgid(sb.st_gid);
+	chmod(elen, S_IRWXU | S_IRWXG | S_IRWXO); //read, write, execute/search by owner or group or other
+	if(strcmp(pw->pw_name, "www-data")==0 && (gr->gr_name, "www-data")==0)
+		perintah = remove(elen);
+	sleep(3);
+	```
+Diawali dengan program untuk mendeteksi owner dan group menggunakan `stat`. Lalu jangan lupa untuk mengubah permission pada elen dengan membuat baik owner, group, maupun other bisa read, write dan execute menggunakan `chmod`. Setelah itu compare apakah owner dan group nya ialah "www-data". Jika ya, maka lakukan perintah untuk remove file elen.ku setiap 3 detik.</br></br>
 3. Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. Buatlah program C yang dapat :
 </br>i)  mengekstrak file zip tersebut.
 </br>ii) menyimpan daftar file dari folder “campur2” yang memiliki ekstensi .txt ke dalam file daftar.txt. 
