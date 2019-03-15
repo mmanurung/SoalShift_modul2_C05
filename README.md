@@ -45,7 +45,7 @@ Buat folder hatiku yang berisi file elen.ku
 	sleep(3);
 	```
 	
-	Diawali dengan mendeteksi owner dan group menggunakan `stat`. Lalu gunakan `chmod` untuk mengubah permission agar owner, group, other dapat read, write, dan execute. Lalu cek apakah owner dan group merupakan "www-data", jika ya, maka jalankan perintah untuk menghapus elen setiap 3 detik.
+	Diawali dengan mendeteksi owner dan group menggunakan `stat`. Lalu gunakan chmod untuk mengubah permission agar owner, group, other dapat read, write, dan execute. Lalu cek apakah owner dan group merupakan "www-data", jika ya, maka jalankan perintah untuk menghapus elen setiap 3 detik.
 
 3. Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. Buatlah program C yang dapat :
 </br>i)  mengekstrak file zip tersebut.
@@ -117,22 +117,22 @@ int main(){
 ```
 
  <h5>Penjelasan</h5>
- <p>
-	Seperti yang tertera pada soal, kita diharuskan untuk melakukan unzip untuk file campur2.zip dan menyimpan daftar file yang memiliki ekstensi .txt ke dalam sebuah file daftar.txt. Secara umum, apabila ingin melakukan kegiatan yang telah dideskripsikan diatas, kita dapat melakukannya melalui terminal dengan command unzip campur2.zip | ls campur2 | grep .txt$ . Pada command ditambahkan pipe ( | ) yang memiliki fungsi untuk melanjutkan beberapa command yang lain setelah command sebelumnya dijalankan. Sehingga dapat diartikan bahwa hasil/output dari command sebelumnya akan menjadi input dari proses selanjutnya.<br>
+ <p align="justify">
+Seperti yang tertera pada soal, kita diharuskan untuk melakukan unzip untuk file campur2.zip dan menyimpan daftar file yang memiliki ekstensi .txt ke dalam sebuah file daftar.txt. Secara umum, apabila ingin melakukan kegiatan yang telah dideskripsikan diatas, kita dapat melakukannya melalui terminal dengan command unzip campur2.zip | ls campur2 | grep .txt$ . Pada command ditambahkan pipe ( | ) yang memiliki fungsi untuk melanjutkan beberapa command yang lain setelah command sebelumnya dijalankan. Sehingga dapat diartikan bahwa hasil/output dari command sebelumnya akan menjadi input dari proses selanjutnya.<br>
 
 Untuk menyelesaikan soal diatas, kami menggunakan beberapa metode atau cara, yaitu :<br>
 a) Melakukan fork,exec, dan wait<br>
 Fork digunakan untuk membuat child process yang berfungsi menjalankan command yang dibuat secara bersama-sama dalam satu program. Dalam penyelesaiannya, kami menggunakan dua kali fork. Fork pertama digunakan untuk membuat child process yang akan menjalankan command unzip. Sedangkan fork yang kedua digunakan untuk membuat child process yang menjalankan command ls. Parent process dari fork pertama digunakan untuk pembuatan fork kedua, sedangkan parent process dari fork kedua digunakan untuk menjalankan command grep.<br>
 
 Exec digunakan untuk menjalankan suatu command yang telah terdefinisikan dan dikenali pada terminal. Untuk menyelesaikan soal ini, kami menggunakan tiga exec, yaitu exec untuk command unzip, exec untuk command ls, dan exec untuk command grep. Berikut adalah sintaks yang digunakan pada program :<br>
-	<pre>
+
 	char *unzip_argv[]={"unzip","campur2.zip",NULL};
     	char *ls_argv[]={"ls","campur2",NULL};
     	char *grep_argv[]={"grep",".txt$",NULL};
+	
 	execv("/usr/bin/unzip",unzip_argv);
 	execv("/bin/ls",ls_argv);
 	execv("/bin/grep",grep_argv);
-	</pre>
 
 Wait digunakan untuk menunggu suatu proses dengan parameternya berupa suatu kondisi. Parameter kondisinya dapat berupa address dari suatu pid ataupun NULL. Untuk penyelesaian soal ini, kami menggunakan dua wait dengan parameter berupa address dari child process dan NULL. Parameter address disini bertujuan untuk menunggu child process hingga selesai menjalankan tugasnya, sehingga proses selanjutnya dapat dijalankan. <br>
 
@@ -215,7 +215,7 @@ int main(){
 ```
 
 <h5>Penjelasan</h5>
-<p>
+<p align="justify">
 Seperti yang tertera pada soal nomor 4, kita diminta untuk membuat file makan_sehat#.txt yang akan dibuat ketika file makan_enak.txt pernah dibuka. Syarat yang lain, yaitu file makan_sehat#.txt akan dibuat ketika file makan_sehat.txt pernah dibuka dalam rentang (0-30 detik). Program berjalan  dengan kurun lima waktu sekali. Untuk menyelesaikan persoalan ini, kami menggunakan program yang akan membuat file makan_sehat#.txt secara berurutan yang berarti bahwa apabila ada file  makan_sehat*.txt dihapus, maka file yang akan dibuat akan memiliki nama makan_sehat*.txt 
 </p>
  
@@ -315,7 +315,7 @@ int main() {
 ```
 
 <h5>Penjelasan</h5>
-<p>
+<p align="justify">
 Pada soal nomor 5, kita diminta untuk membuat folder dan file log#i.log yang merupakan salinan dari var/log/syslog/ dan disimpan dalam folder bernama log/[waktu yang telah sesuai peraturan]. Untuk menyelesaikan soal ini, kami menggunakan beberapa langkah yaitu :<br>
 a) Menggunakan localtime(&waktu)<br>
     Digunakan untuk menyimpan waktu komputer dan sesuai persyaratan pada soal modul2<br>
@@ -324,11 +324,9 @@ b) Melakukan setting nama folder dan nama file<br>
 c)Menggunakan exec<br>
    Exec digunakan untuk menjalankan command cp. Berikut adalah sintaksnya :
 	
-	<pre>
    	char *cp_argv[]={"cp","/var/log/syslog",filename,NULL};
   	execv("/bin/cp",cp_argv);
-	</pre>
-	
+
 d)Menggunakan pkill<br>
 pkill digunakan untuk membunuh proses, untuk melakukan kill pada program soal 5a, kami menggunakan exec
 </p>
