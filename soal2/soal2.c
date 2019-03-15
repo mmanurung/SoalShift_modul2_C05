@@ -31,14 +31,14 @@ int main() {
 		struct passwd *pw = getpwuid(sb.st_uid);
 		struct group  *gr = getgrgid(sb.st_gid);
 
-		if(strcmp(pw->pw_name, "www-data")!=0 && (gr->gr_name, "www-data")!= 0){
+		if(strcmp(pw->pw_name, "www-data")==0 && (gr->gr_name, "www-data")==0){
 			//change permission https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.3.0/com.ibm.zos.v2r3.bpxbd00/rtchm.htm
 			//int chmod(const char *pathname, mode_t mode);
 			chmod(elen, S_IRWXU | S_IRWXG); //read, write, execute/search by owner or group
 			perintah = remove(elen);
 		}
 
-		sleep(10);
+		sleep(3);
 	}
 	exit(EXIT_SUCCESS);
 }
