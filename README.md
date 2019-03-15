@@ -33,6 +33,7 @@ Bertujuan untuk mengarahkan pointer ke direktori yang ditentukan, lalu isi folde
 
 2. Pada suatu hari Kusuma dicampakkan oleh Elen karena Elen dimenangkan oleh orang lain. Semua kenangan tentang Elen berada pada file bernama “elen.ku” pada direktori “hatiku”. Karena sedih berkepanjangan, tugas kalian sebagai teman Kusuma adalah membantunya untuk menghapus semua kenangan tentang Elen dengan membuat program C yang bisa mendeteksi owner dan group dan menghapus file “elen.ku” setiap 3 detik dengan syarat ketika owner dan grupnya menjadi “www-data”. Ternyata kamu memiliki kendala karena permission pada file “elen.ku”. Jadi, ubahlah permissionnya menjadi 777. Setelah kenangan tentang Elen terhapus, maka Kusuma bisa move on.
 </br>Catatan: Tidak boleh menggunakan crontab</br></br>
+
 3. Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. Buatlah program C yang dapat :
 </br>i)  mengekstrak file zip tersebut.
 </br>ii) menyimpan daftar file dari folder “campur2” yang memiliki ekstensi .txt ke dalam file daftar.txt. 
@@ -111,16 +112,14 @@ a) Melakukan fork,exec, dan wait<br>
 Fork digunakan untuk membuat child process yang berfungsi menjalankan command yang dibuat secara bersama-sama dalam satu program. Dalam penyelesaiannya, kami menggunakan dua kali fork. Fork pertama digunakan untuk membuat child process yang akan menjalankan command unzip. Sedangkan fork yang kedua digunakan untuk membuat child process yang menjalankan command ls. Parent process dari fork pertama digunakan untuk pembuatan fork kedua, sedangkan parent process dari fork kedua digunakan untuk menjalankan command grep.<br>
 
 Exec digunakan untuk menjalankan suatu command yang telah terdefinisikan dan dikenali pada terminal. Untuk menyelesaikan soal ini, kami menggunakan tiga exec, yaitu exec untuk command unzip, exec untuk command ls, dan exec untuk command grep. Berikut adalah sintaks yang digunakan pada program :<br>
-
-   	```c
+	<pre>
 	char *unzip_argv[]={"unzip","campur2.zip",NULL};
     	char *ls_argv[]={"ls","campur2",NULL};
     	char *grep_argv[]={"grep",".txt$",NULL};
-
 	execv("/usr/bin/unzip",unzip_argv);
 	execv("/bin/ls",ls_argv);
 	execv("/bin/grep",grep_argv);
-	```
+	</pre>
 
 Wait digunakan untuk menunggu suatu proses dengan parameternya berupa suatu kondisi. Parameter kondisinya dapat berupa address dari suatu pid ataupun NULL. Untuk penyelesaian soal ini, kami menggunakan dua wait dengan parameter berupa address dari child process dan NULL. Parameter address disini bertujuan untuk menunggu child process hingga selesai menjalankan tugasnya, sehingga proses selanjutnya dapat dijalankan. <br>
 
@@ -140,6 +139,7 @@ Freopen yang digunakan untuk menulis hasil dari grep dan disimpan dalam file daf
       - Contoh nama file : makan_sehat1.txt, makan_sehat2.txt, dst</br></br>
  <h2>Jawaban</h2>
  <h5>Source Code</h5>
+ 
  ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -200,6 +200,7 @@ int main(){
         }
 }
 ```
+
 <h5>Penjelasan</h5>
 <p>
 Seperti yang tertera pada soal nomor 4, kita diminta untuk membuat file makan_sehat#.txt yang akan dibuat ketika file makan_enak.txt pernah dibuka. Syarat yang lain, yaitu file makan_sehat#.txt akan dibuat ketika file makan_sehat.txt pernah dibuka dalam rentang (0-30 detik). Program berjalan  dengan kurun lima waktu sekali. Untuk menyelesaikan persoalan ini, kami menggunakan program yang akan membuat file makan_sehat#.txt secara berurutan yang berarti bahwa apabila ada file  makan_sehat*.txt dihapus, maka file yang akan dibuat akan memiliki nama makan_sehat*.txt 
@@ -280,6 +281,7 @@ int main(){
 }
 ```
 <br>b)
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -309,10 +311,11 @@ b) Melakukan setting nama folder dan nama file<br>
 c)Menggunakan exec<br>
    Exec digunakan untuk menjalankan command cp. Berikut adalah sintaksnya :
 	
-	```c
+	<pre>
    	char *cp_argv[]={"cp","/var/log/syslog",filename,NULL};
   	execv("/bin/cp",cp_argv);
-	```
+	</pre>
+	
 d)Menggunakan pkill<br>
 pkill digunakan untuk membunuh proses, untuk melakukan kill pada program soal 5a, kami menggunakan exec
 </p>
