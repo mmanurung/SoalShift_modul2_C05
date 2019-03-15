@@ -46,7 +46,8 @@ Penjelasan program</br>
 		perintah = remove(elen);
 	sleep(3);
 	```
-Diawali dengan program untuk mendeteksi owner dan group menggunakan `stat`. Lalu jangan lupa untuk mengubah permission pada elen dengan membuat baik owner, group, maupun other bisa read, write dan execute menggunakan `chmod`. Setelah itu compare apakah owner dan group nya ialah "www-data". Jika ya, maka lakukan perintah untuk remove file elen.ku setiap 3 detik.</br></br>
+	Diawali dengan program untuk mendeteksi owner dan group menggunakan `stat`. Lalu jangan lupa untuk mengubah permission pada elen 	dengan membuat baik owner, group, maupun other bisa read, write dan execute menggunakan `chmod`. Setelah itu compare apakah owner 	 dan group nya ialah "www-data". Jika ya, maka lakukan perintah untuk remove file elen.ku setiap 3 detik.</br></br>
+	
 3. Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. Buatlah program C yang dapat :
 </br>i)  mengekstrak file zip tersebut.
 </br>ii) menyimpan daftar file dari folder “campur2” yang memiliki ekstensi .txt ke dalam file daftar.txt. 
