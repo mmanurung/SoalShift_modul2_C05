@@ -45,7 +45,7 @@ Buat folder hatiku yang berisi file elen.ku
 	sleep(3);
 	```
 	
-	Diawali dengan mendeteksi owner dan group menggunakan `stat`. Lalu gunakan chmod untuk mengubah permission agar owner, group, other dapat read, write, dan execute. Lalu cek apakah owner dan group merupakan "www-data", jika ya, maka jalankan perintah untuk menghapus elen setiap 3 detik.
+	Diawali dengan mendeteksi owner dan group menggunakan `stat`. Lalu gunakan `chmod` untuk mengubah permission agar owner, group, other dapat read, write, dan execute. Lalu cek apakah owner dan group merupakan "www-data", jika ya, maka jalankan perintah untuk menghapus elen setiap 3 detik.
 
 3. Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. Buatlah program C yang dapat :
 </br>i)  mengekstrak file zip tersebut.
