@@ -15,15 +15,15 @@ Penjelasan:</br>
 	4. `if (dr != NULL){ while ((de = readdir(dr)) != NULL)`, baca isi dari direktori yang ditunjuk oleh ptr `dr`.
 	5. `strcpy(dir_sumber, "/home/nanda/nama/"); strcpy(dir_tujuan, "/home/nanda/modul2/gambar/")`, copy-kan direktori folder 	     sumber dan direktori folder tujuan (gambar) ke array masing-masing.
 	6. `if (DT_DIR != de->d_type)`, untuk memastikan yang dipindahkan hanyalah file saja, folder yang ada dalam folder nama 	   tidak akan dipindahkan.
-	7. `strcpy(file_sumber, de->d_name);`		// copy file-file yang dibaca ke array file_sumber
- 	    `ptr = strrchr(file_sumber, '.');`		// strrchr() berguna untuk mendapatkan karakter yang diinginkan dari yang 							     paling belakang, dalam hal ini karakter '.'.
-	    `strcpy(x, file_sumber);`
-            `if (ptr && (strcmp(ptr, ".png") == 0)){`	// cocokkan apakah file yang dipindahkan ke file_sumber pada nama nya 								   terdapat .png
-               `*ptr = 0;`
-               `strcpy(y, file_sumber);`
-	       `strcat(y, tambahan);`			// file yang terdapat .png pada namanya akan digabungkan dengan elemen 								   pada array tambahan yaitu _grey.png
-	       `strcat(dir_sumber, x);`
-               `strcat(dir_tujuan, y);`			// setelah digabungkan baru pindahkan ke direktori tujuan yaitu /gambar.
+	7. `strcpy(file_sumber, de->d_name);`		// copy file-file yang dibaca ke array file_sumber<br>
+ 	    `ptr = strrchr(file_sumber, '.');`		// strrchr() berguna untuk mendapatkan karakter yang diinginkan dari yang 							     paling belakang, dalam hal ini karakter '.'.<br>
+	    `strcpy(x, file_sumber);`<br>
+            `if (ptr && (strcmp(ptr, ".png") == 0)){`	// cocokkan apakah file yang dipindahkan ke file_sumber pada nama nya 								   terdapat .png<br>
+               `*ptr = 0;`<br>
+               `strcpy(y, file_sumber);`<br>
+	       `strcat(y, tambahan);`			// file yang terdapat .png pada namanya akan digabungkan dengan elemen 								   pada array tambahan yaitu _grey.png<br>
+	       `strcat(dir_sumber, x);`<br>
+               `strcat(dir_tujuan, y);`			// setelah digabungkan baru pindahkan ke direktori tujuan yaitu 								   /gambar<br>
 	    `rename(dir_sumber, dir_tujuan);`
 	8.  Simpan program lalu jalankan `gcc -o soal1 soal1.c` lalu run dengan `~/soal1`
 	Hasil program: hanya file berekstensi .png dari folder nama yang akan dipindahkan ke folder gambar
