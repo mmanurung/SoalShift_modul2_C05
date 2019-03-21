@@ -25,7 +25,7 @@ Penjelasan:</br>
 	       `strcat(dir_sumber, x);`<br>
                `strcat(dir_tujuan, y);`			// setelah digabungkan baru pindahkan ke direktori tujuan yaitu 								   /gambar<br>
 	    `rename(dir_sumber, dir_tujuan);`
-	8.  Simpan program lalu jalankan `gcc -o soal1 soal1.c` lalu run dengan `~/soal1`
+	8.  Simpan program lalu jalankan `gcc -o soal1 soal1.c` lalu run dengan `~/soal1`<br>
 	Hasil program: hanya file berekstensi .png dari folder nama yang akan dipindahkan ke folder gambar<br>
 	Dalam program gunakan daemon agar tiap kali dibuat file berekstensi .png di folder nama akan otomatis dipindahkan.
 
@@ -44,7 +44,7 @@ Penjelasan:</br>
 	6. `if((strcmp(pw->pw_name, "www-data")==0) && (strcmp(gr->gr_name, "www-data")==0))`, bandingkan apakah nama owner dan 	   grup dari "elen" adalah www-data.
 	7. Ubah permission dengan `chmod(elen, 0777);`
 	8. `perintah = remove(elen);`, hapus elen.
-	9.  Simpan program lalu jalankan `gcc -o soal2 soal2.c` lalu run dengan `~/soal2`
+	9.  Simpan program lalu jalankan `gcc -o soal2 soal2.c` lalu run dengan `~/soal2`<br>
 	Hasil program: file elen.ku dalam folder hatiku akan terhapus tiap 3 detik apabila owner maupun grup nya adalah www-		data<br>
 	Dalam program gunakan daemon agar setiap file elen.ku dibuat dan owner serta grup nya ialah www-data (dengan menggunakan 	 sudo), maka file akan otomatis terhapus.
 
