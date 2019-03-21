@@ -15,16 +15,16 @@ Penjelasan:</br>
 	4. `if (dr != NULL){ while ((de = readdir(dr)) != NULL)`, baca isi dari direktori yang ditunjuk oleh ptr `dr`.
 	5. `strcpy(dir_sumber, "/home/nanda/nama/"); strcpy(dir_tujuan, "/home/nanda/modul2/gambar/")`, copy-kan direktori folder 	     sumber dan direktori folder tujuan (gambar) ke array masing-masing.
 	6. `if (DT_DIR != de->d_type)`, untuk memastikan yang dipindahkan hanyalah file saja, folder yang ada dalam folder nama 	   tidak akan dipindahkan.
-	7. `strcpy(file_sumber, de->d_name);		// copy file-file yang dibaca ke array file_sumber
- 	    ptr = strrchr(file_sumber, '.');		// strrchr() berguna untuk mendapatkan karakter yang diinginkan dari yang 							     paling belakang, dalam hal ini karakter '.'.
-	    strcpy(x, file_sumber);
-            if (ptr && (strcmp(ptr, ".png") == 0)){	// cocokkan apakah file yang dipindahkan ke file_sumber pada nama nya 								   terdapat .png
-               *ptr = 0;
-               strcpy(y, file_sumber);
-	       strcat(y, tambahan);			// file yang terdapat .png pada namanya akan digabungkan dengan elemen 								   pada array tambahan yaitu _grey.png
-	       strcat(dir_sumber, x);
-               strcat(dir_tujuan, y);			// setelah digabungkan baru pindahkan ke direktori tujuan yaitu /gambar.
-	    rename(dir_sumber, dir_tujuan);`
+	7. `strcpy(file_sumber, de->d_name);`		// copy file-file yang dibaca ke array file_sumber
+ 	    `ptr = strrchr(file_sumber, '.');`		// strrchr() berguna untuk mendapatkan karakter yang diinginkan dari yang 							     paling belakang, dalam hal ini karakter '.'.
+	    `strcpy(x, file_sumber);`
+            `if (ptr && (strcmp(ptr, ".png") == 0)){`	// cocokkan apakah file yang dipindahkan ke file_sumber pada nama nya 								   terdapat .png
+               `*ptr = 0;`
+               `strcpy(y, file_sumber);`
+	       `strcat(y, tambahan);`			// file yang terdapat .png pada namanya akan digabungkan dengan elemen 								   pada array tambahan yaitu _grey.png
+	       `strcat(dir_sumber, x);`
+               `strcat(dir_tujuan, y);`			// setelah digabungkan baru pindahkan ke direktori tujuan yaitu /gambar.
+	    `rename(dir_sumber, dir_tujuan);`
 	8.  Simpan program lalu jalankan `gcc -o soal1 soal1.c` lalu run dengan `~/soal1`
 	Hasil program: hanya file berekstensi .png dari folder nama yang akan dipindahkan ke folder gambar
 	Dalam program gunakan daemon agar tiap kali dibuat file berekstensi .png di folder nama akan otomatis dipindahkan.
@@ -37,9 +37,9 @@ Penjelasan:</br>
 	3. Lalu cek dengan `ls -ll` jika owner nya masih user computer, lakukan `sudo chown www-data:www-data elen.ku` untuk 		   mengubah owner serta grup nya menjadi www-data, kemudian cek kembali.
 	4. `struct stat sb; char elen[100] = "/home/nanda/hatiku/elen.ku";`, deklarasi ptr ke struct stat, kemudian simpan path 	   direktori file elen.ku ke dalam array elen.
 	5. Untuk mendapatkan owner dan grup "elen"
-	   `stat(elen, &sb);
-	   stat(elen, &sb); //stat system call
-	   struct passwd *pw = getpwuid(sb.st_uid);
+	   `stat(elen, &sb);<br>
+	   stat(elen, &sb); //stat system call <br>
+	   struct passwd *pw = getpwuid(sb.st_uid); <br>
 	   struct group *gr = getgrgid(sb.st_gid);`
 	6. `if((strcmp(pw->pw_name, "www-data")==0) && (strcmp(gr->gr_name, "www-data")==0))`, bandingkan apakah nama owner dan 	   grup dari "elen" adalah www-data.
 	7. Ubah permission dengan `chmod(elen, 0777);`
