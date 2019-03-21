@@ -9,43 +9,44 @@ Kelompok C05:
 1. Elen mempunyai pekerjaan pada studio sebagai fotografer. Suatu hari ada seorang klien yang bernama Kusuma yang meminta untuk mengubah nama file yang memiliki ekstensi .png menjadi “[namafile]_grey.png”. Karena jumlah file yang diberikan Kusuma tidak manusiawi, maka Elen meminta bantuan kalian untuk membuat suatu program C yang dapat mengubah nama secara otomatis dan diletakkan pada direktori /home/[user]/modul2/gambar.
 </br>Catatan : Tidak boleh menggunakan crontab.</br>
 Penjelasan:</br>
-Buat folder untuk menyimpan file .png (gunakan mkdir dan touch)</br>
-Penjelasan program</br>
-
-	```bash
-	DIR *dr = opendir("/home/nanda/nama");
-	if (dr != NULL)
-	while ((de = readdir(dr)) != NULL)
-		strcpy(dir_sumber, "/home/nanda/nama/");
-		strcpy(dir_tujuan, "/home/nanda/modul2/gambar/");
-		strcpy(file_sumber, de->d_name);
-		ptr = strrchr(file_sumber, '.');
-		strcpy(x, file_sumber);
-		if (ptr && (strcmp(ptr, ".png") == 0)){
-			*ptr = 0;
-			strcpy(y, file_sumber);
-            		strcat(y, tambahan);
-			strcat(dir_sumber, x);
-	      		strcat(dir_tujuan, y);
-	      rename(dir_sumber, dir_tujuan
-	```   
-	Bertujuan untuk mengarahkan pointer ke direktori yang ditentukan, lalu isi folder tersebut dibaca. Simpan folder asal dan folder 	tujuan ke array masing-masing, lalu ambil nama file nya dan simpan ke array x. Kemudian tentukan apakah file tersebut berekstensi 	 png atau tidak. Jika ya, maka nama file di tambahkan dengan _grey.png dan di simpan di direktori tujuan.</br></br>
+	1. Buat folder dengan cara `mkdir nama`.
+	2. Buat beberapa file dan/ atau folder di dalamnya dan pastikan ada file yang berekstensi `.png`.
+	3. `DIR *dr = opendir("/home/nanda/nama");`, yaitu untuk mengarahkan pointer pada direktori yang dibuka yaitu direktori 	   folder yang dibuat.
+	4. `if (dr != NULL){ while ((de = readdir(dr)) != NULL)`, baca isi dari direktori yang ditunjuk oleh ptr `dr`.
+	5. `strcpy(dir_sumber, "/home/nanda/nama/"); strcpy(dir_tujuan, "/home/nanda/modul2/gambar/")`, copy-kan direktori folder 	     sumber dan direktori folder tujuan (gambar) ke array masing-masing.
+	6. `if (DT_DIR != de->d_type)`, untuk memastikan yang dipindahkan hanyalah file saja, folder yang ada dalam folder nama 	   tidak akan dipindahkan.
+	7. `strcpy(file_sumber, de->d_name);		// copy file-file yang dibaca ke array file_sumber
+ 	    ptr = strrchr(file_sumber, '.');		// strrchr() berguna untuk mendapatkan karakter yang diinginkan dari yang 							     paling belakang, dalam hal ini karakter '.'.
+	    strcpy(x, file_sumber);
+            if (ptr && (strcmp(ptr, ".png") == 0)){	// cocokkan apakah file yang dipindahkan ke file_sumber pada nama nya 								   terdapat .png
+               *ptr = 0;
+               strcpy(y, file_sumber);
+	       strcat(y, tambahan);			// file yang terdapat .png pada namanya akan digabungkan dengan elemen 								   pada array tambahan yaitu _grey.png
+	       strcat(dir_sumber, x);
+               strcat(dir_tujuan, y);			// setelah digabungkan baru pindahkan ke direktori tujuan yaitu /gambar.
+	    rename(dir_sumber, dir_tujuan);`
+	8.  Simpan program lalu jalankan `gcc -o soal1 soal1.c` lalu run dengan `~/soal1`
+	Hasil program: hanya file berekstensi .png dari folder nama yang akan dipindahkan ke folder gambar
+	Dalam program gunakan daemon agar tiap kali dibuat file berekstensi .png di folder nama akan otomatis dipindahkan.
 
 2. Pada suatu hari Kusuma dicampakkan oleh Elen karena Elen dimenangkan oleh orang lain. Semua kenangan tentang Elen berada pada file bernama “elen.ku” pada direktori “hatiku”. Karena sedih berkepanjangan, tugas kalian sebagai teman Kusuma adalah membantunya untuk menghapus semua kenangan tentang Elen dengan membuat program C yang bisa mendeteksi owner dan group dan menghapus file “elen.ku” setiap 3 detik dengan syarat ketika owner dan grupnya menjadi “www-data”. Ternyata kamu memiliki kendala karena permission pada file “elen.ku”. Jadi, ubahlah permissionnya menjadi 777. Setelah kenangan tentang Elen terhapus, maka Kusuma bisa move on.
 </br>Catatan: Tidak boleh menggunakan crontab</br>
 Penjelasan:</br>
-Buat folder hatiku yang berisi file elen.ku
-	```bash
-	stat(elen, &sb); //stat system call
-	struct passwd *pw = getpwuid(sb.st_uid);
-	struct group  *gr = getgrgid(sb.st_gid);
-	chmod(elen, S_IRWXU | S_IRWXG | S_IRWXO); //read, write, execute/search by owner or group or other
-	if(strcmp(pw->pw_name, "www-data")==0 && (gr->gr_name, "www-data")==0){
-		perintah = remove(elen);
-	sleep(3);
-	```
-	
-	Diawali dengan mendeteksi owner dan group menggunakan `stat`. Lalu gunakan chmod untuk mengubah permission agar owner, group, other dapat read, write, dan execute. Lalu cek apakah owner dan group merupakan "www-data", jika ya, maka jalankan perintah untuk menghapus elen setiap 3 detik.
+	1. Buat folder dengan cara `mkdir hatiku`.
+	2. Buat file elen.ku `touch elen.ku`.
+	3. Lalu cek dengan `ls -ll` jika owner nya masih user computer, lakukan `sudo chown www-data:www-data elen.ku` untuk 		   mengubah owner serta grup nya menjadi www-data, kemudian cek kembali.
+	4. `struct stat sb; char elen[100] = "/home/nanda/hatiku/elen.ku";`, deklarasi ptr ke struct stat, kemudian simpan path 	   direktori file elen.ku ke dalam array elen.
+	5. Untuk mendapatkan owner dan grup "elen"
+	   `stat(elen, &sb);
+	   stat(elen, &sb); //stat system call
+	   struct passwd *pw = getpwuid(sb.st_uid);
+	   struct group *gr = getgrgid(sb.st_gid);`
+	6. `if((strcmp(pw->pw_name, "www-data")==0) && (strcmp(gr->gr_name, "www-data")==0))`, bandingkan apakah nama owner dan 	   grup dari "elen" adalah www-data.
+	7. Ubah permission dengan `chmod(elen, 0777);`
+	8. `perintah = remove(elen);`, hapus elen.
+	9.  Simpan program lalu jalankan `gcc -o soal2 soal2.c` lalu run dengan `~/soal2`
+	Hasil program: file elen.ku dalam folder hatiku akan terhapus tiap 3 detik apabila owner maupun grup nya adalah www-data
+	Dalam program gunakan daemon agar setiap file elen.ku dibuat dan owner serta grup nya ialah www-data (dengan menggunakan 	 sudo), maka file akan otomatis terhapus.
 
 3. Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. Buatlah program C yang dapat :
 </br>i)  mengekstrak file zip tersebut.
