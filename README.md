@@ -26,7 +26,7 @@ Penjelasan:</br>
                `strcat(dir_tujuan, y);`			// setelah digabungkan baru pindahkan ke direktori tujuan yaitu 								   /gambar<br>
 	    `rename(dir_sumber, dir_tujuan);`
 	8.  Simpan program lalu jalankan `gcc -o soal1 soal1.c` lalu run dengan `~/soal1`
-	Hasil program: hanya file berekstensi .png dari folder nama yang akan dipindahkan ke folder gambar
+	Hasil program: hanya file berekstensi .png dari folder nama yang akan dipindahkan ke folder gambar<br>
 	Dalam program gunakan daemon agar tiap kali dibuat file berekstensi .png di folder nama akan otomatis dipindahkan.
 
 2. Pada suatu hari Kusuma dicampakkan oleh Elen karena Elen dimenangkan oleh orang lain. Semua kenangan tentang Elen berada pada file bernama “elen.ku” pada direktori “hatiku”. Karena sedih berkepanjangan, tugas kalian sebagai teman Kusuma adalah membantunya untuk menghapus semua kenangan tentang Elen dengan membuat program C yang bisa mendeteksi owner dan group dan menghapus file “elen.ku” setiap 3 detik dengan syarat ketika owner dan grupnya menjadi “www-data”. Ternyata kamu memiliki kendala karena permission pada file “elen.ku”. Jadi, ubahlah permissionnya menjadi 777. Setelah kenangan tentang Elen terhapus, maka Kusuma bisa move on.
@@ -45,7 +45,7 @@ Penjelasan:</br>
 	7. Ubah permission dengan `chmod(elen, 0777);`
 	8. `perintah = remove(elen);`, hapus elen.
 	9.  Simpan program lalu jalankan `gcc -o soal2 soal2.c` lalu run dengan `~/soal2`
-	Hasil program: file elen.ku dalam folder hatiku akan terhapus tiap 3 detik apabila owner maupun grup nya adalah www-data
+	Hasil program: file elen.ku dalam folder hatiku akan terhapus tiap 3 detik apabila owner maupun grup nya adalah www-		data<br>
 	Dalam program gunakan daemon agar setiap file elen.ku dibuat dan owner serta grup nya ialah www-data (dengan menggunakan 	 sudo), maka file akan otomatis terhapus.
 
 3. Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. Buatlah program C yang dapat :
