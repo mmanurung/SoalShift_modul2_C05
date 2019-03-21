@@ -36,11 +36,11 @@ Penjelasan:</br>
 	2. Buat file elen.ku `touch elen.ku`.
 	3. Lalu cek dengan `ls -ll` jika owner nya masih user computer, lakukan `sudo chown www-data:www-data elen.ku` untuk 		   mengubah owner serta grup nya menjadi www-data, kemudian cek kembali.
 	4. `struct stat sb; char elen[100] = "/home/nanda/hatiku/elen.ku";`, deklarasi ptr ke struct stat, kemudian simpan path 	   direktori file elen.ku ke dalam array elen.
-	5. Untuk mendapatkan owner dan grup "elen"
-	   `stat(elen, &sb);<br>
-	   stat(elen, &sb); //stat system call <br>
-	   struct passwd *pw = getpwuid(sb.st_uid); <br>
-	   struct group *gr = getgrgid(sb.st_gid);`
+	5. Untuk mendapatkan owner dan grup "elen"<br>
+	   `stat(elen, &sb);`<br>
+	   `stat(elen, &sb); //stat system call` <br>
+	   `struct passwd *pw = getpwuid(sb.st_uid);` <br>
+	   `struct group *gr = getgrgid(sb.st_gid);`
 	6. `if((strcmp(pw->pw_name, "www-data")==0) && (strcmp(gr->gr_name, "www-data")==0))`, bandingkan apakah nama owner dan 	   grup dari "elen" adalah www-data.
 	7. Ubah permission dengan `chmod(elen, 0777);`
 	8. `perintah = remove(elen);`, hapus elen.
