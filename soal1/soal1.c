@@ -28,9 +28,6 @@ int main() {
 
 	while(1){
 		struct dirent *de;  // Pointer for directory entry
-	        struct stat buffer;
-        	int status;
-        	char path[PATH_MAX];
 		DIR *dr = opendir("/home/nanda/nama"); // opendir() returns a pointer of DIR type.
 
 		if (dr != NULL) {
@@ -39,7 +36,6 @@ int main() {
 				//char *strcpy(char *dest, const char *src)
 				strcpy(dir_sumber, "/home/nanda/nama/");
 				strcpy(dir_tujuan, "/home/nanda/modul2/gambar/");
-				status = lstat(path, &buffer);
 				if (DT_DIR != de->d_type){
 					strcpy(file_sumber, de->d_name);
  	                                ptr = strrchr(file_sumber, '.');
