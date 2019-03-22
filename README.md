@@ -157,61 +157,67 @@ Freopen yang digunakan untuk menulis hasil dari grep dan disimpan dalam file daf
  ```c
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <dirent.h>
-#include <unistd.h>
 #include <string.h>
+#include <dirent.h>
 #include <time.h>
 
 int main(){
-        pid_t pid, sid;
-        pid=fork();
+	pid_t pid,sid;
+	pid=fork();
+	if(pid<0)
+		exit(EXIT_FAILURE);
+	if(pid>0)
+		exit(EXIT_SUCCESS);
+	umask(0);
+	sid=setsid();
 
-        if(pid<0)
-                exit(EXIT_FAILURE);
-        if(pid>0)
-                exit(EXIT_SUCCESS);
+	if(sid<0)
+		exit(EXIT_FAILURE);
 
-        umask(0);
+	if((chdir("/"))<0)
+		exit(EXIT_FAILURE);
 
-        sid=setsid();
-        if(sid<0)
-                exit(EXIT_FAILURE);
-        if((chdir("/")) < 0)
-                exit(EXIT_FAILURE);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 
-        close(STDIN_FILENO);
-        close(STDOUT_FILENO);
-        close(STDERR_FILENO);
+	while(1){
+		time_t waktu; double detik_ms;
+		time(&waktu);
+		struct stat st={0};
+	        if(stat("/home/bella/Documents/makanan/makan_enak.txt",&st) == -1){
+                	exit(1);
+      		 }
 
-        while(1){
-                chdir("home/bella/Documents/makanan");
-                struct stat status={0}, status_file={0};
-                time_t waktu; time(&waktu); ctime(&waktu);
-                int num=1;
-                FILE *find_file;
-                if(stat("makanan_enak.txt",&status)<0){
-                        printf("Failed\n");
-                        exit(1);
-                }
-                double diff = difftime(waktu,status.st_atime);
-                char *filename="home/bella/Documents/makanan";
-                strcat(filename,"makan_sehat");
-                while(30.00 >= diff && diff>=0){
-                        sprintf(filename,"makan_sehat%d.txt",num);
-                        if(stat(filename,&status_file)<0){
-                                find_file=fopen(filename,"w+");
-				fclose(find_file); break;
-                        }
-                        num++;
-                        strcpy(filename,"home/bella/Documents/makanan/makan_sehat");
-                }
-                sleep(5);
-        }
+       		detik_ms = difftime(waktu,st.st_atime);
+      		int number=1;
+
+      		char filename[100001], sequence[100001];
+      		snprintf(sequence,sizeof(sequence),"%d",number);
+       		struct stat file_parent = {0};
+
+       		strcpy(filename,"home/bella/Documents/makanan/makan_sehat");
+     		while(detik_ms<=30.0){
+                 	snprintf(sequence,sizeof(sequence),"%d",number);
+                 	strcat(sequence,".txt");
+                 	strcat(filename,sequence);
+                 	if(stat(filename,&file_parent) == -1){
+                         	freopen(filename,"w+",stdout);
+                         	fclose(stdout);
+                         	break;
+                  	}
+                 	strcpy(filename,"/home/bella/Documents/makanan/makan_sehat");
+                 	number++;
+        	}
+		sleep(5);
+	}
+	exit(EXIT_SUCCESS);
 }
 ```
 
@@ -246,52 +252,52 @@ a)<br>
 #include <time.h>
 
 int main(){
-        int i=1;
-        pid_t pid, sid;
-        pid=fork();
+	pid_t pid, sid;
+	pid=fork();
 
-        if(pid<0)
-                exit(EXIT_FAILURE);
-        if(pid>0)
-                exit(EXIT_SUCCESS);
+	if(pid<0)
+		exit(EXIT_FAILURE);
+	if(pid>0)
+		exit(EXIT_SUCCESS);
 
-        umask(0);
-        sid=setsid();
+	umask(0);
+	sid=setsid();
 
-        if(sid<0)
-                exit(EXIT_FAILURE);
-        if((chdir("/"))<0)
-                exit(EXIT_FAILURE);
+	if(sid<0)
+		exit(EXIT_FAILURE);
+	if((chdir("/"))<0)
+		exit(EXIT_FAILURE);
 
-        close(STDIN_FILENO);
-        close(STDOUT_FILENO);
-        close(STDERR_FILENO);
-
-        while(1){
-                int num=1; char buffer[50],foldername[101];
-                time_t waktu = time(NULL);
-                if(!((num-1)%30)){
-                        memset(buffer,0,sizeof(buffer));
-                        strftime(buffer,50,"%d:%m:%Y-%H-%M", localtime(&waktu));
-                        sprintf(foldername,"/home/bella/log");
-                        strcat(foldername,buffer);
-                        mkdir(foldername,0777);
-                        num=1;
-                }
-                strftime(buffer,50,"%d:%m:%Y-%H-%M",localtime(&waktu));
-                char filename[101],filename_ext[101];
-                sprintf(filename,"/home/bella/log/");
-                strcat(filename,buffer);
-                snprintf(filename_ext,sizeof(filename_ext),"log%d.log",num);
-		               strcat(filename,filename_ext);
-                if(!fork()){
-                        char *cp_argv[]={"cp","/var/log/syslog",filename,NULL};
-                        execv("/bin/cp",cp_argv);
-                }
-                num++;
-                sleep(60);
-        }
-        exit(EXIT_SUCCESS);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
+	char buffer[50],foldername[101];
+	int num; num=1;
+	while(1){
+		time_t waktu = time(NULL);
+		if((num-1)%30==0){
+			num=1;
+			memset(buffer,0,sizeof(buffer));
+			strftime(buffer,50,"%d:%m:%Y-%H-%M", localtime(&waktu));
+			sprintf(foldername,"/home/bella/log/");
+			strcat(foldername,buffer);
+			mkdir(foldername,0777);
+		}
+		while(num<31){
+			strftime(buffer,50,"%d:%m:%Y-%H-%M/",localtime(&waktu));
+			char filename[101],filename_ext[101];
+			strcpy(filename,"/home/bella/log/");
+			strcat(filename,buffer);
+			snprintf(filename_ext,sizeof(filename_ext),"log%d.log",num);
+			strcat(filename,filename_ext);
+			if(!fork()){
+				execlp("cp","cp","/var/log/syslog",filename,NULL);
+			}
+			num++;
+			sleep(60);
+		}
+	}
+	exit(EXIT_SUCCESS);
 }
 ```
 <br>b)
